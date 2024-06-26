@@ -11,6 +11,9 @@
 # Logs
 *.log
 
+#virtual environment
+/venv
+
 # IDE/Editor configurations
 .vscode/
 .idea/
