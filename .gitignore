@@ -1,12 +1,12 @@
 # Dependency directories
-node_modules/
+#node_modules/
 
 # Environment configuration files
 .env
 
 # Build output
-/dist
-/build
+#/dist
+#/build
 
 # Logs
 *.log
