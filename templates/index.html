@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelPress - Image Compression</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PixelPress - Image Compression using Transform Coding</h1>
+        </header>
+        <main>
+            <section class="upload-section">
+                <h2>Upload Your Image</h2>
+                <input type="file" id="imageUpload" accept="image/*">
+                <label for="compressionLevel">Compression Level:</label>
+                <select id="compressionLevel">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <button id="uploadBtn">Compress Image</button>
+                <p id="statusMessage"></p>
+            </section>
+            <section class="download-section" id="downloadSection">
+                <h2>Download Compressed Image</h2>
+                <a id="downloadLink" href="#" download>Download</a>
+            </section>
+        </main>
+    </div>
+    <script>
+        document.getElementById('uploadBtn').addEventListener('click', function () {
+            const imageFile = document.getElementById('imageUpload').files[0];
+            const compressionLevel = document.getElementById('compressionLevel').value;
+
+            if (!imageFile) {
+                document.getElementById('statusMessage').textContent = 'Please select an image file.';
+                return;
+            }
+
+            document.getElementById('statusMessage').textContent = 'Uploading and compressing image...';
+
+            const formData = new FormData();
+            formData.append('image', imageFile);
+            formData.append('compression_level', compressionLevel);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById('statusMessage').textContent = 'Compression completed!';
+                        document.getElementById('downloadLink').href = data.compressed_image.replace('uploads/', '/download/');
+                        document.getElementById('downloadSection').style.display = 'block';
+                    } else {
+                        document.getElementById('statusMessage').textContent = 'Image upload failed: ' + data.message;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('statusMessage').textContent = 'An error occurred: ' + error.message;
+                });
+        });
+    </script>
+</body>
+</html>
