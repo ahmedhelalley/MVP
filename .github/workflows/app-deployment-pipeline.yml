@@ -1,0 +1,33 @@
+name: Build and Push Docker Image of transform coding
+##
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Login to Azure Container Registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: levelupwww.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - name: Build Docker image
+      run: |
+        docker build -t transformcoding .
+        
+    - name: Tag Docker image
+      run: |
+        docker tag transformcoding levelupportal.azurecr.io/transformcoding:v1
+
+    - name: Push Docker image to Azure Container Registry
+      run: |
+        docker push levelupwww.azurecr.io/transformcoding:v1
