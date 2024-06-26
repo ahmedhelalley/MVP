@@ -1,0 +1,31 @@
+# Dependency directories
+node_modules/
+
+# Environment configuration files
+.env
+
+# Build output
+/dist
+/build
+
+# Logs
+*.log
+
+# IDE/Editor configurations
+.vscode/
+.idea/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Dependency lock files (if you decide to ignore one)
+# package-lock.json
+# yarn.lock
+
+# Temporary files
+*~
+*.tmp
+
+# Compression artifacts
+# Add specific patterns or directories related to your compression output if they should not be tracked
