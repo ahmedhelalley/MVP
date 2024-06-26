@@ -26,7 +26,7 @@ jobs:
         
     - name: Tag Docker image
       run: |
-        docker tag transformcoding levelupportal.azurecr.io/transformcoding:v1
+        docker tag transformcoding levelupwww.azurecr.io/transformcoding:v1
 
     - name: Push Docker image to Azure Container Registry
       run: |
