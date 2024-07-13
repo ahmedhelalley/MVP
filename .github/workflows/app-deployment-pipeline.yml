@@ -24,7 +24,7 @@ jobs:
       run: |
         docker build -t transformcoding . \
           --build-arg CONNECTION_STRING=${{ secrets.CONNECTION_STRING }} \
-          --build-arg CONTAINER_NAME=${{ secrets.CONTAINER_NAME }}  
+          --build-arg CONTAINER_NAME=${{ secrets.CONTAINER_NAME }}
     - name: Tag Docker image
       run: docker tag transformcoding levelupwww.azurecr.io/transformcoding:v1
 
