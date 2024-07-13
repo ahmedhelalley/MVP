@@ -2,6 +2,12 @@ FROM python:3.8-slim
 
 WORKDIR /app/
 
+ARG CONTAINER_NAME
+ARG CONNECTION_STRING
+
+ENV CONTAINER_NAME=$CONTAINER_NAME
+ENV CONNECTION_STRING=$CONNECTION_STRING
+
 COPY . .
 
 # Update the package lists and install the required packages in one RUN command to keep the image size small

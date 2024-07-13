@@ -5,6 +5,12 @@ import uuid
 import numpy as np
 import cv2
 from scipy.fftpack import dct, idct
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+
+connection_string = "DefaultEndpointsProtocol=https;AccountName=wwwsa;AccountKey=VJScHCYBJs5rJMQ8mvdG5KJwqkvk/PER72+uV90iYNcYeSexM8oAYubIPY8GtAzpPGkjoJuv2R1I+AStlNh36g==;EndpointSuffix=core.windows.net"
+blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+container_name = "pixelpress-compressed-images"
+container_client = blob_service_client.get_container_client(container_name)
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
@@ -103,12 +109,17 @@ def compress_image(image_path, compression_level):
     compressed_image_path = os.path.join(app.config['COMPRESSED_FOLDER'], os.path.basename(image_path))
     cv2.imwrite(compressed_image_path, compressed_image)
     
-    return compressed_image_path
+    #return compressed_image_path
+
+    blob_client = container_client.get_blob_client(os.path.basename(compressed_image_path))
+    with open(compressed_image_path, "rb") as data:
+        blob_client.upload_blob(data, overwrite=True)
 
 @app.route('/download/<filename>')
 def download_image(filename):
-    path = os.path.join(app.config['COMPRESSED_FOLDER'], filename)
-    return send_file(path, as_attachment=True)
+    blob_client = container_client.get_blob_client(filename)
+    download_stream = blob_client.download_blob()
+    return Response(download_stream.readall(), mimetype='image/jpeg')
 
 if __name__ == '__main__':
     app.run(debug=True)
