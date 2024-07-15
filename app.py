@@ -7,6 +7,7 @@ import cv2
 from scipy.fftpack import dct, idct
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
+
 connection_string = "DefaultEndpointsProtocol=https;AccountName=wwwsa;AccountKey=VJScHCYBJs5rJMQ8mvdG5KJwqkvk/PER72+uV90iYNcYeSexM8oAYubIPY8GtAzpPGkjoJuv2R1I+AStlNh36g==;EndpointSuffix=core.windows.net"
 blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 container_name = "pixelpress-compressed-images"
