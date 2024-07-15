@@ -8,9 +8,9 @@ from scipy.fftpack import dct, idct
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
 
-connection_string = "DefaultEndpointsProtocol=https;AccountName=wwwsa;AccountKey=VJScHCYBJs5rJMQ8mvdG5KJwqkvk/PER72+uV90iYNcYeSexM8oAYubIPY8GtAzpPGkjoJuv2R1I+AStlNh36g==;EndpointSuffix=core.windows.net"
+connection_string = ""
 blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-container_name = "pixelpress-compressed-images"
+container_name = ""
 container_client = blob_service_client.get_container_client(container_name)
 
 app = Flask(__name__)
